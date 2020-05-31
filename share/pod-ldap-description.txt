@@ -1,0 +1,64 @@
+Name:         openldap-5f8f4d9f44-4k7lf
+Namespace:    dev
+Priority:     0
+Node:         minikube/192.168.39.250
+Start Time:   Sun, 31 May 2020 10:58:58 -0700
+Labels:       app=openldap
+              pod-template-hash=5f8f4d9f44
+              release=openldap
+Annotations:  checksum/configmap-env: c15bd12f306aceb1f33ccc31712ed7566e021e179ebe40a31e15c7017c885011
+Status:       Pending
+IP:           172.17.0.7
+IPs:
+  IP:           172.17.0.7
+Controlled By:  ReplicaSet/openldap-5f8f4d9f44
+Containers:
+  openldap:
+    Container ID:
+    Image:          osixia/openldap:1.2.4
+    Image ID:
+    Ports:          389/TCP, 636/TCP
+    Host Ports:     0/TCP, 0/TCP
+    State:          Waiting
+      Reason:       CreateContainerConfigError
+    Ready:          False
+    Restart Count:  0
+    Liveness:       tcp-socket :ldap-port delay=20s timeout=1s period=10s #success=1 #failure=10
+    Readiness:      tcp-socket :ldap-port delay=20s timeout=1s period=10s #success=1 #failure=10
+    Environment Variables from:
+      openldap-env  ConfigMap  Optional: false
+      openldap      Secret     Optional: false
+    Environment:    <none>
+    Mounts:
+      /etc/ldap/slapd.d from data (rw,path="config-data")
+      /var/lib/ldap from data (rw,path="data")
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-x5b9p (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             False
+  ContainersReady   False
+  PodScheduled      True
+Volumes:
+  certs:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  openldap
+    ReadOnly:   false
+  default-token-x5b9p:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-x5b9p
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason     Age               From               Message
+  ----     ------     ----              ----               -------
+  Normal   Scheduled  <unknown>         default-scheduler  Successfully assigned dev/openldap-5f8f4d9f44-4k7lf to minikube
+  Normal   Pulled     0s (x3 over 15s)  kubelet, minikube  Container image "osixia/openldap:1.2.4" already present on machine
+  Warning  Failed     0s (x3 over 15s)  kubelet, minikube  Error: stat /home/user/storage/openldap/data: no such file or directory
